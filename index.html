@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+
+<body>
+  <div class="" id="app">
+    <h1>ToDoアプリ</h1>
+    <!-- <form action=""> -->
+    <label for="">タスク名</label>
+    <input type="text" v-model="input_name">
+    <label for="">推定時間(分)</label>
+    <input type="text" v-model="input_time">
+    <!-- </form> -->
+    <btn-component v-on:clicked="add"></btn-component>
+    <table>
+      <tr>
+        <td>タスク</td>
+        <td>推定時間(分)</td>
+      </tr>
+      <tr v-for="(task, index)  in tasks">
+        <td>{{task.name}}</td>
+        <td>{{task.time}}分</td>
+      </tr>
+    </table>
+  </div>
+</body>
+<script>
+  Vue.component('btn-component', {
+    props: {
+      fruitName: {
+        type: String
+      }
+    },
+    template: '<button v-on:click="add">追加</button>',
+    methods: {
+      add: function () {
+        this.$emit('clicked');
+      }
+    }
+  })
+  const vm = new Vue({
+    el: '#app',
+    data: {
+      input_name: "test",
+      input_time: 0,
+      // 配列の中のオブジェクト
+      tasks: [
+        {
+          name: '生徒A',
+          time: 30,
+        },
+        {
+          name: '生徒B',
+          time: 40,
+        },
+        {
+          name: '生徒C',
+          time: 50,
+        },
+      ]
+    },
+    methods: {
+      add: function () {
+        // this.tasks.push(['ggggg', 123])
+        this.tasks.push({ name: this.input_name, time: this.input_time })
+        console.log(this.input_name + this.input_time);
+      }
+    }
+  })
+</script>
+
+</html>
